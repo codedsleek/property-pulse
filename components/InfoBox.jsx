@@ -1,4 +1,3 @@
-
 const InfoBox = ({
     heading,
     backgroundColor = 'bg-gray-100',
