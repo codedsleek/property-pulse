@@ -1,9 +1,14 @@
 import PropertyCard from '@/components/PropertyCard';
 import properties from '@/properties.json'; 
 
-const PropertiesPage = () => {
-  return (
+async function delay() {
+  await new Promise(resolve => setTimeout(resolve, 200)); 
+}
 
+const PropertiesPage = async () => {
+  await delay(); 
+  
+  return (
     <section className="px-4 py-6">
       <div className="container-xl lg:container m-auto px-4 py-6">
         { properties.length === 0 ? (
@@ -15,10 +20,8 @@ const PropertiesPage = () => {
             ))}
           </div>
         )}
-       
       </div>
     </section>
-
   )
 }
 
