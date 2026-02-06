@@ -8,6 +8,7 @@ const HomePage = async () => {
   
   return (
    <>
+   
     <Hero />
     <InfoBoxes />
     <HomeProperties />
