@@ -19,7 +19,6 @@ const MainLayout = ({ children }) => {
     </body>
     </html>
 
-
   );
 };
 
