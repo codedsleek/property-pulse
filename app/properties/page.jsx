@@ -1,5 +1,5 @@
 import PropertyCard from '@/components/PropertyCard';
-import properties from '@/properties.json'; 
+
 
 async function delay() {
   await new Promise(resolve => setTimeout(resolve, 200)); 
