@@ -1,12 +1,27 @@
 import PropertyCard from '@/components/PropertyCard';
 
+async function fetchProperties() {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_MONGODB_URL}/properties`);
+   if (!res.ok) {
+      throw new Error('Failed to fetch properties');
+  }
+  return res.json();
+  }
+  catch (error) {
+    console.error("Error fetching properties:", error);
+  }
+}
 
 async function delay() {
   await new Promise(resolve => setTimeout(resolve, 200)); 
 }
 
 const PropertiesPage = async () => {
-  await delay(); 
+  const properties = await fetchProperties();
+
+  // Sort Properties by date
+  properties.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   
   return (
     <section className="px-4 py-6">
@@ -25,4 +40,4 @@ const PropertiesPage = async () => {
   )
 }
 
-export default PropertiesPage
+export default PropertiesPage;

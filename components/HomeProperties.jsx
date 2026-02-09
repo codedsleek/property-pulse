@@ -1,10 +1,34 @@
-import properties from '@/properties.json';
 import Link from 'next/link';
 import PropertyCard from '@/components/PropertyCard';
 
-const HomeProperties = () => {
+async function fetchProperties() {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_MONGODB_URL}/properties`);
+    
+    console.log('Fetch URL:', `${process.env.NEXT_PUBLIC_API_MONGODB_URL}/properties`);
+    console.log('Response status:', res.status);
+    
+    if (!res.ok) {
+      throw new Error('Failed to fetch properties');
+    }
+    
+    const data = await res.json();
+    console.log('Fetched properties count:', data.length);
+    
+    return data;
+  } catch (error) {
+    console.error("Error fetching properties:", error);
+    return [];
+  }
+}
+
+const HomeProperties = async () => {
+    const properties = await fetchProperties();
+    
+    console.log('Properties in HomeProperties:', properties.length);
+    
     const recentProperties = properties
-    .sort(() => Math.random() - Math.random ())
+    .sort(() => Math.random() - Math.random())
     .slice(0, 3);
 
     return (
@@ -15,11 +39,11 @@ const HomeProperties = () => {
                         Recent Properties
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {recentProperties === 0 ? (
+                        {recentProperties.length === 0 ? (
                             <p>No Properties Found</p>
                         ) : recentProperties.map((property) => (
-                            <PropertyCard key ={property._id} property={ property } />
-                        )) }
+                            <PropertyCard key={property._id} property={property} />
+                        ))}
                     </div>
                 </div>
             </section>
@@ -28,8 +52,7 @@ const HomeProperties = () => {
                 <Link
                     href="/properties"
                     className="block bg-black text-white text-center py-4 px-6 rounded-xl hover:bg-gray-700"
-                    >View All Properties
-                    
+                >View All Properties
                 </Link>
             </section>
         </>
