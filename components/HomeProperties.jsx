@@ -22,6 +22,7 @@ async function fetchProperties() {
   }
 }
 
+
 const HomeProperties = async () => {
     const properties = await fetchProperties();
     
